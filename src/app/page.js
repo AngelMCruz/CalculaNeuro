@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import * as tf from "@tensorflow/tfjs";
 
 export default function Calculadora() {
   const [modeloActual, setModeloActual] = useState(null);
@@ -8,6 +7,15 @@ export default function Calculadora() {
   const [valA, setValA] = useState("");
   const [valB, setValB] = useState("");
   const [resultado, setResultado] = useState(null);
+
+    // Carga TensorFlow.js SOLO en cliente
+  useEffect(() => {
+    async function cargarTF() {
+      const tfjs = await import("@tensorflow/tfjs");
+      setTf(tfjs);
+    }
+    cargarTF();
+  }, []);
 
   // Cargar el modelo cuando cambia la operación
   useEffect(() => {
